@@ -12,7 +12,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
-import javax.transaction.TransactionScoped;
+//import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 //import javax.transaction.Transactional;
 
 /**
@@ -24,8 +26,11 @@ public class PessoaTesteTransactionService {
     
     @PersistenceUnit(unitName = "ExemploApplicationUnit")
     private EntityManagerFactory emf;
+    //@PersistenceUnit
+    //private EntityManager m;
     
-    @TransactionScoped()
+    //@TransactionScoped()
+    @Transactional(propagation = Propagation.SUPPORTS)//utiliza a mesma transação
     public void pessoasAll(){
         System.out.println("==== SELECIONA TODOS OS DADOS DA TABELA (2) ======");
         EntityManager m = emf.createEntityManager();

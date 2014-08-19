@@ -37,7 +37,7 @@ public class PessoaMB implements Serializable {
         return bean;
     }
 
-    public void salvar() {
+    public void salvar() throws Exception{
         service.salvar(bean);
     }
 

@@ -1,7 +1,6 @@
 package br.exemplo.service;
 
 import br.exemplo.pojo.Pessoa;
-import java.util.List;
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -9,24 +8,27 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.transaction.UserTransaction;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @ApplicationScoped
 public class PessoaService {
     
     //não pode ser utilizado porque o container não está gerenciando (utilizado em EJBs)
-    //@PersistenceContext(unitName = "ExemploApplicationUnit")
+    //@PersistenceContext
     //private EntityManager m;
     
     @PersistenceUnit(unitName = "ExemploApplicationUnit")
     private EntityManagerFactory emf;
     
-    @Resource
-    private UserTransaction tx;
+    //@Resource
+    //private UserTransaction tx;
     
     @Inject
     private PessoaTesteTransactionService testeTransactional;
     
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void salvar(Pessoa bean) throws Exception{
         System.out.println("INJECT_FACTORY (TX): " + bean.toString());
         
